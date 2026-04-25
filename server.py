@@ -276,11 +276,17 @@ async def save_trip(request: Request):
     }
 trips_collection = db["trips"]
 
-@api_router.get("/trips")
-async def get_trips(request: Request):
-    user = await get_current_user(request)
-    trips = await db.trips.find({"user_id": user["_id"]}, {"_id": 0}).sort("created_at", -1).to_list(100)
-    return trips
+@app.get("/api/trips")
+async def get_trips():
+
+    trips = await trips_collection.find().to_list(100)
+
+    for trip in trips:
+        trip["_id"] = str(trip["_id"])
+
+    return {
+        "trips": trips
+    }
 
 @api_router.delete("/trips/{trip_id}")
 async def delete_trip(trip_id: str, request: Request):
