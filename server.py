@@ -11,6 +11,7 @@ from datetime import datetime, timezone, timedelta
 from bson import ObjectId
 import os, uuid, logging, bcrypt, jwt, json, secrets, httpx
 from openai import OpenAI
+import uvicorn
 # ──────────────────── Config ────────────────────
 ROOT_DIR = Path(__file__).parent
 mongo_url = os.environ['MONGO_URL']
