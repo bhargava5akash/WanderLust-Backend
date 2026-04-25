@@ -257,7 +257,7 @@ async def generate_trip(data: dict):
             detail=f"Chat failed: {str(e)}"
         )
 
-@app.post("/api/save-trip")
+@app.post("/api/trips/save")
 async def save_trip(request: Request):
 
     data = await request.json()
@@ -266,15 +266,13 @@ async def save_trip(request: Request):
         "destination": data.get("destination"),
         "duration": data.get("duration"),
         "budget": data.get("budget"),
-        "travelers": data.get("travelers"),
-        "trip": data.get("trip"),
+        "trip_data": data.get("trip_data"),
     }
 
-    result = trips_collection.insert_one(trip_data)
+    await trips_collection.insert_one(trip_data)
 
     return {
-        "message": "Trip saved successfully",
-        "id": str(result.inserted_id)
+        "success": True
     }
 trips_collection = db["trips"]
 
