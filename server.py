@@ -284,9 +284,7 @@ async def get_trips():
     for trip in trips:
         trip["_id"] = str(trip["_id"])
 
-    return {
-        "trips": trips
-    }
+    return trips
 
 @api_router.delete("/trips/{trip_id}")
 async def delete_trip(trip_id: str, request: Request):
